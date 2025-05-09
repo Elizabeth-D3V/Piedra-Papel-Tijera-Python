@@ -1,43 +1,28 @@
-       # JUEGO PIEDRA PAPEL O TIJERA
 import random
-def movimiento_compu():
-  mov_random = random.random()
-  if mov_random < 1/3:
-    mov_compu = "Piedra"
-  elif mov_random <= 2/3:
-    mov_compu = "Papel"
-  elif mov_random > 2/3:
-    mov_compu = "Tijera"
 
-  return mov_compu
+def get_computer_choice():
+  return random.choice(['Piedra', 'Papel', 'Tijera'])
 
-mov_humano = input("¿Qúe elegís? Escribí Piedra, Papel o Tijera: ").capitalize()
-mov_compu = movimiento_compu()
+def determine_winner(player_choice, computer_choice):
+  if player_choice == computer_choice:
+    return "Empate"
+  elif (player_choice == 'Piedra' and computer_choice == 'Tijera') or \
+       (player_choice == 'Papel' and computer_choice == 'Piedra') or \
+       (player_choice == 'Tijera' and computer_choice == 'Papel'):
+    return "¡Ganaste!"
+  else:
+    return "Perdiste. La próxima vez será :["
 
-if mov_humano == "Piedra": 
-  if mov_compu == "Piedra":
-    print("Piedra. ¡Empate!")
-  elif mov_compu == "Papel":
-    print("Papel. Perdiste. La próxima vez será :[")
-  elif mov_compu == "Tijera":
-    print("Tijera. ¡Ganaste! ")
+while True:
+  player_choice = input("¿Qué elegís? Escribí Piedra, Papel o Tijera (o 'salir' para terminar): ").capitalize()
 
-elif mov_humano == "Papel":
-  if mov_compu == "Piedra":
-    print("Piedra. ¡Ganaste!")
-  elif mov_compu == "Papel":
-    print("Papel. Empate.")
-  elif mov_compu == "Tijera":
-    print("Tijera. Perdiste. La próxima vez será :[")
+  if player_choice.lower() == 'salir':
+    break 
 
-elif mov_humano == "Tijera":
-  if mov_compu == "Piedra":
-    print("Piedra. Perdiste. La próxima vez será :[")
-  elif mov_compu == "Papel":
-    print("Papel. ¡Ganaste!")
-  elif mov_compu == "Tijera":
-    print("Tijera. Empate.")
+  if player_choice not in ['Piedra', 'Papel', 'Tijera']:
+    print("Entrada inválida. Por favor, elige Piedra, Papel o Tijera.")
+    continue 
 
-
-
-  
+  computer_choice = get_computer_choice()
+  result = determine_winner(player_choice, computer_choice)
+  print(f"{computer_choice}. {result}")
